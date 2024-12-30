@@ -1,0 +1,43 @@
+primero que se debe hacer para hacer una conexion con mysql y js 
+
+1 crear la base de datos en mysql
+2 encender el servidor Xampp
+3 instalar desde la consola de comando en la carpeta de del proyecto una libreria con el siguiente comando npm init -y
+4 luego isntalar mysql en el proyecto con npm install mysql
+5 Conexion de la base de datos
+
+const mysql = require('mysql')
+
+const conection = mysql.createConnection({
+    host:'localhost',
+    user:'alejo',
+    password:'3222329443',
+    database:'mydb',
+})
+
+de esta manera se crea la conexion 
+
+6 aqui se comprueba la conexion
+
+conection.connect((err) => {
+    if (err) throw err
+    console.log('la conexion funciona')
+})
+
+7 listo ya estaria la conexion de mysql con js
+y ya se pueden hacer consulatas
+
+8 ejemplo de consultas 
+
+conection.query('SELECT * from users',(err,rows) =>{
+    if (err) throw err
+    console.log('los datos de la tabla son estos: ')
+    console.log(rows)
+    console.log(rows[1])
+    
+    console.log('la cantidad de usuarios que hay en total son : ')
+    
+    console.log(rows.length)
+
+})
+aqui lo que hace es hacer una consulta de las tablas
