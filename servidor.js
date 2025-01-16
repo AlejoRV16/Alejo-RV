@@ -41,7 +41,38 @@ app.post('/guardar', (req, res) => {
     });
 });
 
+
+
+// Ruta para login
+app.post('/login', (req, res) => {
+    const { CORREO, CLAVE } = req.body;
+
+    // Verificar si ambos campos están presentes
+    if (!CORREO || !CLAVE) {
+        return res.status(400).send("Correo o clave faltantes");
+    }
+
+    const query = "SELECT * FROM users WHERE CORREO = ? AND CLAVE = ?";
+
+    connection.query(query, [CORREO, CLAVE], (err, results) => {
+        if (err) {
+            console.error("Error al buscar en la base de datos:", err);
+            return res.status(500).send("Error del servidor");
+        }
+
+        // Verificar si se encontró el usuario
+        if (results.length > 0) {
+            res.status(200).json({ mensaje: "Login exitoso", usuario: results[0] });
+        } else {
+            res.status(401).send("Credenciales incorrectas");
+        }
+    });
+});
+
+
 // Iniciar el servidor
 app.listen(port, () => {
     console.log(`Servidor escuchando en el puerto ${port}`);
 });
+
+
